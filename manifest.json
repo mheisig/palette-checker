@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "True Summer Palette Checker",
+  "version": "1.0",
+  "description": "Pick any color from a webpage and check if it falls within the True Summer color palette.",
+  "permissions": ["activeTab", "scripting"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Pick a color to check (Alt+P)"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+P"
+      },
+      "description": "Pick a color from the page"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
