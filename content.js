@@ -472,18 +472,7 @@ function showPopup(x, y, hex, hsl) {
     </div>
   `;
 
-  // Dismiss on click outside or Escape
-  const dismiss = (e) => {
-    if (e.type === "keydown" && e.key !== "Escape") return;
-    removePopup();
-    document.removeEventListener("keydown", dismiss);
-    document.removeEventListener("mousedown", dismiss);
-  };
-  // Delay attaching so the current click doesn't immediately dismiss
-  setTimeout(() => {
-    document.addEventListener("keydown", dismiss);
-    document.addEventListener("mousedown", dismiss);
-  }, 50);
+  // Popup is dismissed by picking a new color (replaces it) or Escape (overlay handles it)
 }
 
 // ── Arm/Pick Logic ───────────────────────────────────────────────────────────
@@ -516,6 +505,7 @@ function armPicker() {
 
   function cancel(e) {
     if (e.key === "Escape") {
+      removePopup();
       removeOverlay();
       document.removeEventListener("keydown", cancel);
     }
@@ -525,10 +515,9 @@ function armPicker() {
   overlay.addEventListener("click", (e) => {
     const cx = e.clientX;
     const cy = e.clientY;
-    removeOverlay();
-    document.removeEventListener("keydown", cancel);
 
     // Ask background to screenshot the tab and sample the pixel
+    // Overlay stays open so user can keep picking colors
     chrome.runtime.sendMessage(
       { type: "pick-color", x: cx, y: cy, dpr: window.devicePixelRatio || 1 },
       (response) => {
